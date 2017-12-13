@@ -15,8 +15,8 @@
 Program can return a random integer between 1 and 6
 Program can keep a running total of returned numbers
 Program puts result at 0 if a 1 is rolled
-Program can switch between players if a 1 is rolled
 User can choose to switch to the other player instead of roll
+Program can switch between players if a 1 is rolled
 
 ## Technologies used:
 
