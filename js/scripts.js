@@ -1,4 +1,8 @@
 var playerArray = [];
+var currentPlayer;
+var currentScoreArray = [];
+
+var total = 0;
 
 var Player = function(player) {
   this.totalScore = 0;
@@ -12,7 +16,24 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
-var enterPlayer = function() {}
+function rollDice(currentScoreArray) {
+  //debugger;
+  currentScoreArray.push(getRandomIntInclusive(1, 6));
+  var roundTotal = 0;
+  for (var i in currentScoreArray) {
+    roundTotal += currentScoreArray[i];
+  }
+  console.log(roundTotal);
+  return roundTotal;
+}
+
+// function rollDice(currentPlayer) {
+//   var roll = getRandomIntInclusive(1, 6);
+//   currentPlayer.roundScore += roll;
+// }
+
+
+//var enterPlayer = function() {}
 
 $(document).ready(function(){
   $("form#players").submit(function(event){
@@ -25,8 +46,11 @@ $(document).ready(function(){
   })
   $("form#roll").submit(function(event){
     event.preventDefault();
-    var roll = getRandomIntInclusive(1, 6);
-    alert(roll);
+    var something = rollDice(currentScoreArray);
+    alert(something);
+    // $(".total1").empty();
+    // $(".")
+    //alert(roll);
   })
   $("form#hold").submit(function(event){
     event.preventDefault();
