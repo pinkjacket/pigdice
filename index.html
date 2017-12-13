@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/scripts.js"></script>
+    <title>Pig Dice</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Pig Dice</h1>
+        <h2>A game of chance</h2>
+      </div>
+      <form id="players">
+        <div class="form-group">
+          <label for="name1">Enter name for player 1</label>
+          <input id="name1" class="form-control" type="text">
+        </div>
+        <div class="form-group">
+          <label for="name2">Enter name for player 2</label>
+          <input id="name2" class="form-control" type="text">
+        </div>
+        <button type="submit" class="btn btn-primary">Start!</button>
+      </form>
+      <br>
+      <form id="roll">
+        <button type="submit" class="btn btn-primary">Roll!</button>
+      </form>
+      <br>
+      <form id="hold">
+        <button type="submit" class="btn btn-primary">Hold!</button>
+      </form>
+      <br>
+      <div class="round">
+        Score for this round:
+      </div>
+      <br>
+      <div class="total1">
+        Player 1 score:
+      </div>
+      <br>
+      <div class="total2">
+        Player 2 score:
+      </div>
+    </div>
+  </body>
+</html>
