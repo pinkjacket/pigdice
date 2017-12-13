@@ -38,11 +38,27 @@ function rollDice(currentScoreArray) {
     return roundTotal;
   } else {
     currentScoreArray.length = 0;
-    currentScoreArray[0] = 0;
+  //  currentScoreArray[0] = 0;
     turn = turn + 1;
     return currentScoreArray;
   }
+}
 
+Player.prototype.computer = function(currentScoreArray) {
+  var currentScore = rollDice(currentScoreArray);
+  if (currentScore > 0) {
+    currentScore = rollDice(currentScoreArray);
+  }
+  console.log(currentScore);
+  if (turn % 2 === 0) {
+    turn = turn + 1;
+  }
+  currentScoreArray.length = 0;
+  total = 0;
+  finalRoundTotal = 0;
+  playerArray[1].totalScore = parseInt(playerArray[1].playerParseInt() + currentScore);
+  console.log(playerArray[1].totalScore)
+  currentScore = 0;
 }
 
 Player.prototype.hold = function(currentScoreArray, playerArray, finalRoundTotal, turn) {
@@ -60,10 +76,10 @@ Player.prototype.hold = function(currentScoreArray, playerArray, finalRoundTotal
     playerArray[0].totalScore = parseIntTotal1;
   }
 
-  if (playerArray[0].totalScore > 100) {
-    alert("Player 1 has won!");
-  } else if (playerArray[1].totalScore > 100) {
-    alert("Player 2 has won!");
+  if (playerArray[0].totalScore >= 100) {
+    alert(playerArray[0].name + " has won!");
+  } else if (playerArray[1].totalScore >= 100) {
+    alert(playerArray[1].name + " has won!");
   } else {
     turn = turn + 1;
   }
@@ -108,15 +124,23 @@ $(document).ready(function(){
   })
   $("form#roll").submit(function(event){
     event.preventDefault();
+    var player2type = $("input:radio[name=player2]:checked").val();
     var currentScore = rollDice(currentScoreArray);
     $("#round").empty();
     $("#round").append(currentScore);
+    if (player2type === "computer" && turn % 2 === 0) {
+      playerArray[1].computer(currentScoreArray);
+      $("#total2").empty();
+      $("#total2").append(playerArray[1].playerParseInt());
+      $("#round").empty();
+    }
     // $(".total1").empty();
     // $(".")
     //alert(roll);
   })
   $("form#hold").submit(function(event){
     event.preventDefault();
+    var player2type = $("input:radio[name=player2]:checked").val();
     if (turn % 2 !== 0) {
       playerArray[0].hold(currentScoreArray, playerArray, finalRoundTotal, turn);
     } else {
@@ -136,8 +160,16 @@ $(document).ready(function(){
     turn = turn + 1;
     $("#round").empty();
     currentScoreArray.length = 0;
-    currentScoreArray[0] = 0;
-    if (playerArray[0].totalScore > 100 || playerArray[1].totalScore > 100) {
+    //currentScoreArray[0] = 0;
+    if (player2type === "computer" && turn % 2 === 0) {
+      playerArray[1].computer(currentScoreArray);
+      $("#total2").empty();
+      $("#round").empty();
+      $("#total2").append(playerArray[1].playerParseInt());
+      console.log(playerArray[1].playerParseInt());
+    };
+    if (playerArray[0].totalScore >= 100) {
+      alert(playerArray[0].name + " has won!");
       $("#round").empty();
       $("#1").empty();
       $("#total1").empty();
@@ -145,5 +177,14 @@ $(document).ready(function(){
       $("#total2").empty();
       playerArray = [];
     }
+    if (playerArray[1].totalScore >= 100) {
+      alert(playerArray[1].name + " has won!");
+      $("#round").empty();
+      $("#1").empty();
+      $("#total1").empty();
+      $("#2").empty();
+      $("#total2").empty();
+      playerArray = [];
+    };
   })
 })
