@@ -1,5 +1,5 @@
 var playerArray = [];
-var currentPlayer = "";
+//var currentPlayer = "";
 var currentScoreArray = [];
 var finalRoundTotal = 0;
 var total = 0;
@@ -27,8 +27,6 @@ function getRandomIntInclusive(min, max) {
 
 function rollDice(currentScoreArray) {
   //debugger;
-  console.log(currentPlayer);
-  console.log(playerArray[0]);
   var randomNumber = getRandomIntInclusive(1, 6);
   if (randomNumber !== 1) {
     currentScoreArray.push(randomNumber);
@@ -62,7 +60,13 @@ Player.prototype.hold = function(currentScoreArray, playerArray, finalRoundTotal
     playerArray[0].totalScore = parseIntTotal1;
   }
 
-  turn = turn + 1;
+  if (playerArray[0].totalScore > 100) {
+    alert("Player 1 has won!");
+  } else if (playerArray[1].totalScore > 100) {
+    alert("Player 2 has won!");
+  } else {
+    turn = turn + 1;
+  }
   /*if (currentPlayer === playerArray[0]) {
     currentPlayer = playerArray[1];
   } else {
@@ -85,6 +89,11 @@ Player.prototype.playerParseInt = function() {
 $(document).ready(function(){
   $("form#players").submit(function(event){
     event.preventDefault();
+    $("#round").empty();
+    $("#1").empty();
+    $("#total1").empty();
+    $("#2").empty();
+    $("#total2").empty();
     var namePlayer1 = $("input#name1").val();
     var namePlayer2 = $("input#name2").val();
     $("#1").append(namePlayer1);
@@ -92,8 +101,9 @@ $(document).ready(function(){
     var player1 = new Player(namePlayer1);
     var player2 = new Player(namePlayer2);
     playerArray.push(player1, player2);
-    currentPlayer = player1;
-    console.log(currentPlayer);
+    turn = 1;
+    //currentPlayer = player1;
+    //console.log(currentPlayer);
     alert("Ready");
   })
   $("form#roll").submit(function(event){
@@ -127,5 +137,13 @@ $(document).ready(function(){
     $("#round").empty();
     currentScoreArray.length = 0;
     currentScoreArray[0] = 0;
+    if (playerArray[0].totalScore > 100 || playerArray[1].totalScore > 100) {
+      $("#round").empty();
+      $("#1").empty();
+      $("#total1").empty();
+      $("#2").empty();
+      $("#total2").empty();
+      playerArray = [];
+    }
   })
 })
