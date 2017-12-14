@@ -105,97 +105,109 @@ $(document).ready(function(){
     $("#total2").empty();
     var namePlayer1 = $("input#name1").val();
     var namePlayer2 = $("input#name2").val();
-    $("#1").append(namePlayer1);
-    $("#2").append(namePlayer2);
-    var player1 = new Player(namePlayer1);
-    var player2 = new Player(namePlayer2);
-    playerArray.push(player1, player2);
-    turn = 1;
-    //currentPlayer = player1;
-    //console.log(currentPlayer);
-    alert("Ready");
+    if (!namePlayer1 || !namePlayer2) {
+      alert("Please enter player names");
+    } else {
+      $("#1").append(namePlayer1);
+      $("#2").append(namePlayer2);
+      var player1 = new Player(namePlayer1);
+      var player2 = new Player(namePlayer2);
+      playerArray.push(player1, player2);
+      turn = 1;
+      alert("Ready");
+    }
   })
   $("form#roll").submit(function(event){
     event.preventDefault();
-    var player2type = $("input:radio[name=player2]:checked").val();
-    var currentScore = rollDice(currentScoreArray);
-    $("#round").empty();
-    $("#round").append(currentScore);
-    if (player2type === "computer" && turn % 2 === 0) {
-      playerArray[1].computer(currentScoreArray);
-      $("#total2").empty();
-      $("#total2").append(playerArray[1].playerParseInt());
+    if (!($("input#name1").val()) || !($("input#name2").val())) {
+      alert("Please enter player names");
+    } else {
+      var player2type = $("input:radio[name=player2]:checked").val();
+      var currentScore = rollDice(currentScoreArray);
       $("#round").empty();
+      $("#round").append(currentScore);
+      if (player2type === "computer" && turn % 2 === 0) {
+        playerArray[1].computer(currentScoreArray);
+        $("#total2").empty();
+        $("#total2").append(playerArray[1].playerParseInt());
+        $("#round").empty();
+      }
+      if (playerArray[0].totalScore >= 100) {
+        alert(playerArray[0].name + " has won!");
+        $("#round").empty();
+        $("#1").empty();
+        $("#total1").empty();
+        $("#2").empty();
+        $("#total2").empty();
+        playerArray = [];
+      } else if (playerArray[1].totalScore >= 100) {
+        alert(playerArray[1].name + " has won!");
+        $("#round").empty();
+        $("#1").empty();
+        $("#total1").empty();
+        $("#2").empty();
+        $("#total2").empty();
+        playerArray = [];
+      } else {
+        console.log("consoling logs is nice");
+      };
     }
-    if (playerArray[0].totalScore >= 100) {
-      alert(playerArray[0].name + " has won!");
-      $("#round").empty();
-      $("#1").empty();
-      $("#total1").empty();
-      $("#2").empty();
-      $("#total2").empty();
-      playerArray = [];
-    }
-    if (playerArray[1].totalScore >= 100) {
-      alert(playerArray[1].name + " has won!");
-      $("#round").empty();
-      $("#1").empty();
-      $("#total1").empty();
-      $("#2").empty();
-      $("#total2").empty();
-      playerArray = [];
-    };
     // $(".total1").empty();
     // $(".")
     //alert(roll);
   })
   $("form#hold").submit(function(event){
     event.preventDefault();
-    var player2type = $("input:radio[name=player2]:checked").val();
-    if (turn % 2 !== 0) {
-      playerArray[0].hold(currentScoreArray, playerArray, finalRoundTotal, turn);
+    if (!($("input#name1").val()) || !($("input#name2").val())) {
+      alert("Please enter player names");
     } else {
-      playerArray[1].hold(currentScoreArray, playerArray, finalRoundTotal, turn);
-    }
-    //currentPlayer.hold(currentScoreArray, playerArray, currentPlayer, finalRoundTotal);
-    // var thing = currentPlayer.totalScore.toString.replace(re, "");
-    //console.log(thing);
-    if (turn % 2 !== 0) {
-      $("#total1").empty();
-      $("#total1").append(playerArray[0].playerParseInt());
-    } else {
-      $("#total2").empty();
-      $("#total2").append(playerArray[1].playerParseInt());
-    }
-    finalRoundTotal = 0;
-    turn = turn + 1;
-    $("#round").empty();
-    currentScoreArray.length = 0;
-    //currentScoreArray[0] = 0;
-    if (player2type === "computer" && turn % 2 === 0) {
-      playerArray[1].computer(currentScoreArray);
-      $("#total2").empty();
+      var player2type = $("input:radio[name=player2]:checked").val();
+      if (turn % 2 !== 0) {
+        playerArray[0].hold(currentScoreArray, playerArray, finalRoundTotal, turn);
+      } else {
+        playerArray[1].hold(currentScoreArray, playerArray, finalRoundTotal, turn);
+      }
+      //currentPlayer.hold(currentScoreArray, playerArray, currentPlayer, finalRoundTotal);
+      // var thing = currentPlayer.totalScore.toString.replace(re, "");
+      //console.log(thing);
+      if (turn % 2 !== 0) {
+        $("#total1").empty();
+        $("#total1").append(playerArray[0].playerParseInt());
+      } else {
+        $("#total2").empty();
+        $("#total2").append(playerArray[1].playerParseInt());
+      }
+      finalRoundTotal = 0;
+      turn = turn + 1;
       $("#round").empty();
-      $("#total2").append(playerArray[1].playerParseInt());
-      console.log(playerArray[1].playerParseInt());
-    };
-    if (playerArray[0].totalScore >= 100) {
-      alert(playerArray[0].name + " has won!");
-      $("#round").empty();
-      $("#1").empty();
-      $("#total1").empty();
-      $("#2").empty();
-      $("#total2").empty();
-      playerArray = [];
-    }
-    if (playerArray[1].totalScore >= 100) {
-      alert(playerArray[1].name + " has won!");
-      $("#round").empty();
-      $("#1").empty();
-      $("#total1").empty();
-      $("#2").empty();
-      $("#total2").empty();
-      playerArray = [];
+      currentScoreArray.length = 0;
+      //currentScoreArray[0] = 0;
+      if (player2type === "computer" && turn % 2 === 0) {
+        playerArray[1].computer(currentScoreArray);
+        $("#total2").empty();
+        $("#round").empty();
+        $("#total2").append(playerArray[1].playerParseInt());
+        console.log(playerArray[1].playerParseInt());
+      };
+      if (playerArray[0].totalScore >= 100) {
+        alert(playerArray[0].name + " has won!");
+        $("#round").empty();
+        $("#1").empty();
+        $("#total1").empty();
+        $("#2").empty();
+        $("#total2").empty();
+        playerArray = [];
+      } else if (playerArray[1].totalScore >= 100) {
+        alert(playerArray[1].name + " has won!");
+        $("#round").empty();
+        $("#1").empty();
+        $("#total1").empty();
+        $("#2").empty();
+        $("#total2").empty();
+        playerArray = [];
+      } else {
+        console.log("consoling logs is nice");
+      };
     };
   })
 })
