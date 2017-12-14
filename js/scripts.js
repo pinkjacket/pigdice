@@ -76,13 +76,6 @@ Player.prototype.hold = function(currentScoreArray, playerArray, finalRoundTotal
     playerArray[0].totalScore = parseIntTotal1;
   }
 
-  if (playerArray[0].totalScore >= 100) {
-    alert(playerArray[0].name + " has won!");
-  } else if (playerArray[1].totalScore >= 100) {
-    alert(playerArray[1].name + " has won!");
-  } else {
-    turn = turn + 1;
-  }
   /*if (currentPlayer === playerArray[0]) {
     currentPlayer = playerArray[1];
   } else {
@@ -134,6 +127,24 @@ $(document).ready(function(){
       $("#total2").append(playerArray[1].playerParseInt());
       $("#round").empty();
     }
+    if (playerArray[0].totalScore >= 100) {
+      alert(playerArray[0].name + " has won!");
+      $("#round").empty();
+      $("#1").empty();
+      $("#total1").empty();
+      $("#2").empty();
+      $("#total2").empty();
+      playerArray = [];
+    }
+    if (playerArray[1].totalScore >= 100) {
+      alert(playerArray[1].name + " has won!");
+      $("#round").empty();
+      $("#1").empty();
+      $("#total1").empty();
+      $("#2").empty();
+      $("#total2").empty();
+      playerArray = [];
+    };
     // $(".total1").empty();
     // $(".")
     //alert(roll);
