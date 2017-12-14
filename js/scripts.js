@@ -61,6 +61,25 @@ Player.prototype.computer = function(currentScoreArray) {
   currentScore = 0;
 }
 
+Player.prototype.computerHard = function(currentScoreArray) {
+  var currentScore = rollDice(currentScoreArray);
+  if (currentScore > 0) {
+    while (currentScore > 0 && currentScore < 10){
+      currentScore = rollDice(currentScoreArray);
+    }
+  }
+  console.log(currentScore);
+  if (turn % 2 === 0) {
+    turn = turn + 1;
+  }
+  currentScoreArray.length = 0;
+  total = 0;
+  finalRoundTotal = 0;
+  playerArray[1].totalScore = parseInt(playerArray[1].playerParseInt() + currentScore);
+  console.log(playerArray[1].totalScore)
+  currentScore = 0;
+}
+
 Player.prototype.hold = function(currentScoreArray, playerArray, finalRoundTotal, turn) {
   for (var i in currentScoreArray) {
     finalRoundTotal += currentScoreArray[i];
@@ -132,6 +151,12 @@ $(document).ready(function(){
         $("#total2").append(playerArray[1].playerParseInt());
         $("#round").empty();
       }
+      if (player2type === "hard" && turn % 2 === 0) {
+        playerArray[1].computerHard(currentScoreArray);
+        $("#total2").empty();
+        $("#total2").append(playerArray[1].playerParseInt());
+        $("#round").empty();
+      }
       if (playerArray[0].totalScore >= 100) {
         alert(playerArray[0].name + " has won!");
         $("#round").empty();
@@ -189,6 +214,12 @@ $(document).ready(function(){
         $("#total2").append(playerArray[1].playerParseInt());
         console.log(playerArray[1].playerParseInt());
       };
+      if (player2type === "hard" && turn % 2 === 0) {
+        playerArray[1].computerHard(currentScoreArray);
+        $("#total2").empty();
+        $("#total2").append(playerArray[1].playerParseInt());
+        $("#round").empty();
+      }
       if (playerArray[0].totalScore >= 100) {
         alert(playerArray[0].name + " has won!");
         $("#round").empty();
